@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import sys,os
+
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/lib')
+
+try:
+    import Image
+except ImportError:
+    from PIL import Image
+
+import pandas as pd
+import pytesseract
+from bs4 import BeautifulSoup
+
+# import nltk - a library for NLP analysis
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+from nltk import tag
+#from autocorrect import spell
+from autocorrect import Speller
+from sys import platform
+import math
+
+import re
+import os
+import codecs
+import traceback
+
+from Levenshtein import distance as levenshtein_distance
+import tldextract
+
+from collections import Counter
+
+import signal
+
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/lib')
+sys.path.append('/mnt/extra1/projects/phishing/scripts_m1/Gibberish-Detector')
+import gib_score
+
+#import blacklists
+#import utils
+
+import enchant
+import wordninja
+import subprocess
+
+import dns
+from bs4 import BeautifulSoup as beatsop
+
+from website import Website
+
+#Ref: https://stackoverflow.com/questions/2281850/timeout-function-if-it-takes-too-long-to-finish
+class timeout:
+    def __init__(self, seconds=1, error_message='Timeout'):
+        self.seconds = seconds
+        self.error_message = error_message
+    def handle_timeout(self, signum, frame):
+        raise TimeoutError(self.error_message)
+    def __enter__(self):
+        signal.signal(signal.SIGALRM, self.handle_timeout)
+        signal.alarm(self.seconds)
+    def __exit__(self, type, value, traceback):
+        signal.alarm(0)
+
+def filter_by_key_phrases(json_file):
+   content = ""
+   #with open(html_file) as f:
+   #   content = f.readlines()
+   #content_str = ""
+   #for line in content:
+   #   line = line.strip()
+   #   content_str += line
+
+   ws = Website(jspath=json_file)
+   content_str = ws.source
+
+   soup = beatsop(content_str)
+
+   title = soup.title.text.lower() if soup.title is not None else ""
+   title = title.strip()
+   if 'Account Suspended'.lower() in title: return 'Account Suspended'.lower()
+   if 'error' in title: return 'error'.lower()
+   if 'DNS, Dynamic DNS, VPN, VPS and Web Hosting Provider'.lower() in title: return 'DNS, Dynamic DNS, VPN, VPS and Web Hosting Provider'.lower()
+   if 'Index of /'.lower() in title: return 'Index of /'.lower()
+   if '400 Bad Request'.lower() in title: return '400 Bad Request'.lower()
+   if 'Domains, Webspace, Domain Webhosting, Server-Hosting Provider'.lower() in title: return 'Domains, Webspace, Domain Webhosting, Server-Hosting Provider'.lower()
+   if 'Expired or Suspended'.lower() in title: return 'Expired or Suspended'.lower()
+   if 'web hosting'.lower() in title: return  'web hosting'.lower() #<title>site44 - absurdly simple web hosting</title>
+   if 'Contact Support'.lower() in title: return 'Contact Support'.lower()
+   if 'Free Website'.lower() in title: return 'Free Website'.lower() #<title>Welcome to messagealertsupportmailalertconnecthomenslbnhj.000webhostapp.com Free Website</title>
+
+   if 'This domain is registered at'.lower() in content_str.lower(): return 'This domain is registered at'.lower()
+   if 'contact your hosting provider'.lower() in content_str.lower(): return 'contact your hosting provider'.lower() #If you are the owner of this website, please contact your hosting provider
+   if 'data-adblockkey="MFww'.lower() in content_str.lower(): return 'data-adblockkey="MFww'.lower() #data-adblockkey="MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALquDFETXRn0Hr05fUP7EJT77xYnPmRbpMy4vk8KYiHnkNpednjOANJcaXDXcKQJN0nXKZJL7TciJD
+   if 'Your domain name is not added to the database'.lower() in content_str.lower(): return 'Your domain name is not added to the database'.lower()
+   if 'If you want your website to be available on the Internet, open your webmasters panel and in the general settings page turn on websites availability'.lower() in content_str.lower(): return 'If you want your website to be available on the Internet'.lower()
+   if '<span class="related-searches-custom">Related Searches:</span>'.lower() in content_str.lower(): return '<span class="related-searches-custom">'.lower()
+   if 'failed to open stream'.lower() in content_str.lower(): return 'failed to open stream'.lower() #<b>Warning</b>:  Unknown: failed to open stream: Permission denied in <b>Unknown</b> on line <b>0</b><br>
+   if 'This link is currently unavailable'.lower() in content_str.lower(): return 'This link is currently unavailable'.lower() #<html><head></head><body><div align="center" style="font-size:12px;margin-top:40px;">This link is currently unavailable.<!-- err3 --></div></body></html>
+
+   if "coming soon".lower() in content_str.lower(): return "coming soon".lower()
+   if "opening soon".lower() in content_str.lower(): return "opening soon".lower()
+   if "webpackJsonpparking-lander".lower() in content_str.lower(): return "webpackJsonpparking-lander".lower()
+   if "web hosting".lower() in content_str.lower(): return "web hosting".lower()
+   if "is For Sale".lower() in content_str.lower(): return "is For Sale".lower()
+   if "free domain name".lower() in content_str.lower(): return "free domain name".lower()
+   if "parked domain".lower() in content_str.lower(): return "parked domain".lower()
+   if "EN CONSTRUCTION".lower() in content_str.lower(): return "EN CONSTRUCTION".lower()
+   if "under construction".lower() in content_str.lower(): return "under construction".lower()
+   if "checkdomain".lower() in content_str.lower(): return "checkdomain".lower()
+   if "parking".lower() in content_str.lower(): return "parking".lower()
+   if "sell domain".lower() in content_str.lower(): return "sell domain".lower()
+   if "sell a domain".lower() in content_str.lower(): return "sell a domain".lower()
+   if "buy domain".lower() in content_str.lower(): return "buy domain".lower()
+   if "buy a domain".lower() in content_str.lower(): return "buy a domain".lower()
+   if "Domains For Sale".lower() in content_str.lower(): return "Domains For Sale".lower()
+   if "This site can’t be reached".lower() in content_str.lower() or "DNS_PROBE_FINISHED_NXDOMAIN".lower() in content_str.lower(): return "This site can’t be reached_DNS_PROBE_FINISHED_NXDOMAIN".lower()
+   if "Activate your domain".lower() in content_str.lower(): return "Activate your domain".lower()
+
+   #skip by language
+   ##if 'lang=' in content_str.lower() and 'lang="en' not in content_str.lower(): return 'lang='
+
+   if '<body></body>' in content_str.lower(): return '<body></body>'
+
+   #if 'Your session has expired'.lower() in content_str.lower(): return 1
+   #re_lang_match =  re.search('html lang="(.+?)"', content_str.lower())
+   #if re_lang_match:
+   #  lang = re_lang_match.group(1)
+   #  if lang and lang.lower()!="en": return 'lang='
+
+
+   if '<body></body>'.lower() in content_str.lower(): return '<body></body>'.lower()
+   #if '<body>'.lower() not in content_str.lower(): return 'NOT <body>'.lower()
+   if 'domain has been suspended'.lower() in content_str.lower(): return 'domain has been suspended'.lower()
+   if 'banned your access'.lower() in content_str.lower(): return 'banned your access'.lower()
+   if 'account may have been suspended'.lower() in content_str.lower(): return 'account may have been suspended'.lower()
+   if '504 Gateway Time-out'.lower() in content_str.lower(): return '504 Gateway Time-out'.lower()
+   if 'suspended'.lower() in content_str.lower(): return 'suspended'.lower()
+   if 'hosting'.lower() in content_str.lower(): return 'hosting'.lower()
+   if 'Loading..'.lower() in content_str.lower(): return 'Loading..'.lower()
+   if 'You need to enable JavaScript'.lower() in content_str.lower(): return 'You need to enable JavaScript'.lower()
+   if 'construccion</title>'.lower() in content_str.lower(): return 'construccion</title>'.lower()
+
+   return 0
+
