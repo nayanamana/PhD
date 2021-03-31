@@ -1,0 +1,26 @@
+Creating database/tables (if not exist)
+Running command => /usr/bin/mysql -u root -pmysql < /mnt/extra1/projects/phishing/scripts_2/create_db_2.sql
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------------------------------
+Running command: /usr/bin/wget https://www.whoisds.com//whois-database/newly-registered-domains/MjAyMS0wMy0yNy56aXA=/nrd -O /mnt/extra1/web_domains/workspace/new_doms_2021-03-27.zip --user-agent="XmeBot/1.0 (https://blog.rootshell.be/bot/)"
+### Found 159905 new domains to process for 2021-03-27 ...
+Connecting to mysql database (phishing_schema)...
+Connected to MySQL database - phishing_schema
+Time now = 29/03/2021 20:07:03
+Finished inserting records to new_doms_28032021 table [END TIME: 29/03/2021 20:07:03]
+Connecting to mysql database (phishing_schema)...
+Connected to MySQL database - phishing_schema
+Time now = 29/03/2021 20:07:04
+Finished inserting records to new_doms_28032021 table [END TIME: 29/03/2021 20:07:04]
+Connecting to mysql database (phishing_schema)...
+Connected to MySQL database - phishing_schema
+Time now = 29/03/2021 20:07:04
+Finished inserting records to new_doms_28032021 table [END TIME: 29/03/2021 20:07:04]
+Connecting to mysql database (phishing_schema)...
+Connected to MySQL database - phishing_schema
+Time now = 29/03/2021 20:07:06
+Finished inserting records to new_doms_28032021 table [END TIME: 29/03/2021 20:07:06]
+Connecting to mysql database (phishing_schema)...
+Connected to MySQL database - phishing_schema
+Time now = 29/03/2021 20:07:13
+Finished inserting records to new_doms_28032021 table [END TIME: 29/03/2021 20:07:13]
