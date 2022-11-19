@@ -1,1 +1,1 @@
-# Source files and dataset relating to the work in the Ph.D. thesis of Nayanamana Samarasinghe
+# Source files and datasets relating to the work in the Ph.D. thesis of Nayanamana Samarasinghe
