@@ -1,0 +1,2 @@
+This script checks for possible tracker by matching the TLD for the host domain and the requested domain.
+txt file should contain "host domain| requested domain"

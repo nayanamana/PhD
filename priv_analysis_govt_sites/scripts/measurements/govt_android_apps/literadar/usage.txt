@@ -1,0 +1,9 @@
+Place both automate.sh and test.py inside the same folder cloned for literadar.
+
+./automate.sh <path to folder containing country wise folders containing apks>
+
+example: ./automate.sh "/root/test/"
+
+test folder tree should be like this:
+test -> autralia -> n_apks
+test -> japan -> n_apks

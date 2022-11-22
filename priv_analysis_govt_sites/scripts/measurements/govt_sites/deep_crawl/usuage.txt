@@ -1,0 +1,9 @@
+./main.sh <txt files containing Previously collected Urls stored as couontryname.txt> <number of process to run> 
+
+Also make sure hakrawler is installed.
+
+Example: ./main.sh "/root/test/"
+
+Folder:
+test -> Nepal.txt
+test -> China.txt

@@ -1,0 +1,4 @@
+
+./login_automate.sh <path to folder containing containing apks>
+
+

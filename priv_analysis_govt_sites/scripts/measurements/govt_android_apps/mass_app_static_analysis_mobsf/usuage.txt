@@ -1,0 +1,5 @@
+./automate_static.sh <path to folder containing apks>
+
+Note:
+Provide path and appropriate api keys on line 13 of automate_static.sh
+

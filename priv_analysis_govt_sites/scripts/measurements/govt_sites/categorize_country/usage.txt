@@ -1,0 +1,4 @@
+For using country categorize.py script:
+Edit "src_dict" and provide file to the already categorized list.
+In line 57, edit api.txt to the filename that contains the url that needs to be categorized.
+Include country_extension.txt file in same folder as the script.

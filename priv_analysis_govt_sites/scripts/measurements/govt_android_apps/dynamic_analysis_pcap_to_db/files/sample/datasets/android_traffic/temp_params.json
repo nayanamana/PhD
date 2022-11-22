@@ -1,0 +1,20 @@
+{
+  "hotspotName": "uk.gov.metoffice.weather.android.pcap",
+  "CrawlDate": "2020-02-07 20:22",
+  "category": "Parent",
+  "address": "NA",
+  "LandingPageUrl": "NA",
+  "WelcomePageURL": "NA",
+  "Browsertype": "Chrome",
+  "ProtectionMethod": "None",
+  "UsedAccount": "None",
+  "account_email": "",
+  "ISP": "uk.gov.metoffice.weather.android.pcap",
+  "package_name": "uk.gov.metoffice.weather.android.pcap",
+  "website": "secureteen.com",
+  "Critical_Error": false,
+  "comments": "Linux\n",
+  "geoloc_permission": "No",
+  "hotspot_extension_version": "mninphaapoicnaemiigoaillnphomjcb",
+  "Mobile": "yes"
+}

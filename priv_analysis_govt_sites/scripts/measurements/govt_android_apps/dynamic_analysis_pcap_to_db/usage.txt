@@ -1,0 +1,4 @@
+Open file automate.sh
+
+Change the dir accoording to your setting.
+Extract patentalcontrol.zip file before running automate.sh

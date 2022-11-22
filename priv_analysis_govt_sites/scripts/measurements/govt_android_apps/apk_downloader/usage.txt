@@ -1,0 +1,1 @@
+on line 7 change "tmp3/" with path to folder containing text files that contains apk ids or url.
