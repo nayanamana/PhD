@@ -1,6 +1,6 @@
 # On Cloaking Behaviors of Malicious Websites
 
-The source code (inclduing that of the crawler is based on https://www.sciencedirect.com/science/article/pii/S0167404820303874
+The source code (inclduing that of the crawler) is based on https://www.sciencedirect.com/science/article/pii/S0167404820303874
 
 The source code in *.js (nodejs) is based on Puppeteer 
 
