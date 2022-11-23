@@ -39,7 +39,7 @@ mysql_db = 'phishing_results_schema'
 
 db_create_sql_file = '/mnt/extra1/projects/phishing/scripts_2/phishing_results_2.sql'
 
-vt_api_key = '3d4ed5043e0130894e142a6663d091d9703227ccf7a90d23d93b661d841aa105'
+vt_api_key = VT_API_KEY
 
 def create_db():
    global mysql_user
